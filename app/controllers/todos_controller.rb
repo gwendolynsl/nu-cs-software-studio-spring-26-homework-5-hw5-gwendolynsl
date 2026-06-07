@@ -3,7 +3,11 @@ class TodosController < ApplicationController
 
   # GET /todos or /todos.json
   def index
-    @todos = Todo.all
+    @todos = if params[:category].present?
+      Todo.with_category(params[:category])
+    else
+      Todo.all
+    end
   end
 
   # GET /todos/1 or /todos/1.json
